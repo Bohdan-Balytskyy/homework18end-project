@@ -1,0 +1,198 @@
+* {
+  margin: 0;
+  height: 0;
+  box-sizing: border-box;
+}
+@mixin headerProp(
+  $w: 3rem,
+  $bc: lightgreen,
+  $fs: 1.5rem,
+  $h: 3rem,
+  $ta: center,
+  $lh: 3rem
+) {
+  background-color: $bc;
+  font-size: $fs;
+  width: $w;
+  height: $h;
+  text-align: $ta;
+  line-height: $lh;
+}
+.container {
+  width: 98%;
+  height: 90vh;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  header {
+    display: flex;
+    justify-content: space-between;
+    height: 3rem;
+    margin: 2rem 0;
+    .sidebar,
+    .logout {
+      @include headerProp();
+    }
+    .major {
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 2rem;
+      span {
+        font-size: 1rem;
+        margin-left: 0.5rem;
+      }
+      &__box {
+        @include headerProp(25%);
+      }
+    }
+    .logout {
+      cursor: pointer;
+    }
+  }
+  .center {
+    position: relative;
+    padding: 2rem 1rem;
+    height: 80%;
+    background-color: floralwhite;
+    color: grey;
+    h3 {
+      border-bottom: 2px solid grey;
+      font-size: 1.2rem;
+      height: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    &__box {
+      height: 30%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      .activeIcon {
+        background-color: lighten(lightgreen, 20%);
+        box-shadow: 0 0 2px 2px lightgreen;
+      }
+    }
+    &__boxChoice {
+      position: absolute;
+      top: 1.5rem;
+      left: 5rem;
+      height: 4rem;
+      width: 9rem;
+      background-color: lightgreen;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+    }
+    &__element {
+      height: 100%;
+      margin-right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    &__countSave {
+      position: absolute;
+      padding: 1rem;
+      top: 2rem;
+      left: 25rem;
+      width: 30rem;
+      height: 10rem;
+      background-color: lightgreen;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      border-radius: 5px;
+      z-index: 2;
+    }
+    &__circle {
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid lightgreen;
+      color: lightgreen;
+      margin: 1rem 0;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 3rem;
+      cursor: pointer;
+    }
+    &__heading {
+      height: 1rem;
+      text-align: center;
+    }
+    &__addSave {
+      position: absolute;
+      top: 6rem;
+      left: 0rem;
+      background-color: lightgreen;
+      height: 2.5rem;
+      width: 15rem;
+      text-align: center;
+      line-height: 2.5rem;
+      border-radius: 5px;
+    }
+    input {
+      width: 9rem;
+      height: 2rem;
+      border: 0;
+      border-radius: 5px;
+      &:focus {
+        outline: 0;
+      }
+    }
+    input[type="button"] {
+      width: 4rem;
+      margin-left: 1rem;
+      background-color: floralwhite;
+      &:hover {
+        cursor: pointer;
+        color: lightgreen;
+      }
+    }
+    input[type="button"].center__choice {
+      width: 8rem;
+      height: 1.5rem;
+      margin-left: 0;
+    }
+    input[type="number"] {
+      width: 4rem;
+      height: 1.5rem;
+      margin-left: 1rem;
+      text-align: center;
+    }
+    &__addIncome {
+      background-color: lightgreen;
+      height: 2.5rem;
+      width: 16rem;
+      line-height: 2.5rem;
+      text-align: center;
+      border-radius: 5px;
+    }
+    h4 {
+      color: red;
+      position: absolute;
+      top: -2.5rem;
+      left: 6rem;
+      font-size: 1rem;
+    }
+    span {
+      cursor: pointer;
+    }
+    .grey {
+      border-color: grey;
+      color: grey;
+      cursor: pointer;
+    }
+  }
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  position: absolute;
+}

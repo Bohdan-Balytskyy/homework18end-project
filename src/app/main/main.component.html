@@ -1,0 +1,114 @@
+<div class="background" *ngIf="isCountIncome || isCountSave"></div>
+<div class="container">
+    <header>
+        <div class="sidebar">
+            <i class="fa fa-bars"></i>
+        </div>
+        <div class="major">
+            <div class="major__box user">
+                <i class="fa fa-user"></i>
+                <span>USER: {{userLogged.name}} {{userLogged.surname}}</span>
+            </div>
+            <div class="major__box balance">
+                <i class="fa fa-balance-scale"></i>
+                <span>BALANCE: ${{userLogged.balance}}</span>
+            </div>
+            <div class="major__box expenses">
+                <i class="fa fa-shopping-cart"></i>
+                <span>EXPENSES: ${{userLogged.expenses}}</span>
+            </div>
+            <div class="major__box date">
+                <i class="fa fa-calendar"></i>
+                <span>DATE: {{today | date : 'dd.MM.y'}}</span>
+            </div>
+        </div>
+        <div class="logout" (click)="logout()">
+            <i class="fa fa-sign-out"></i>
+        </div>
+    </header>
+
+    <div class="center" >
+        <div class="center__countSave" *ngIf="isCountIncome">
+            <input type="button" name="okSave" value="OK">
+            <input type="button" name="cancelSave" value="CANCEL" (click)="isCountIncome = false">
+        </div>
+        <div class="center__countSave" *ngIf="isCountSave">
+            <input type="button" name="okSpend" value="OK">
+            <input type="button" name="cancelSpend" value="CANCEL" (click)="isCountSave = false">
+        </div>
+        <div class="center__box" >
+            <div class="center__element">
+                <p class="center__heading">INCOME</p>
+                <div class="center__circle" (click)="clickIncome()" 
+                [class.activeIcon]="isIncomeActive">
+                    <i class="fa fa-dollar"></i>
+                </div>
+                <p class="center__heading">${{userLogged.income}}</p>
+            </div>
+            <div class="center__boxChoice" *ngIf="(isIncomeActive && !isDistributeActive && !isIncomeAdd)">
+                    <input class="center__choice" type="button" value="Внести дохід" name="add"
+                    (click)="addIncomeStart()">
+                    <input class="center__choice" type="button" value="Розподілити дохід" 
+                    name="distribute" (click)="distribute()">
+            </div>
+            <div class="center__addIncome" *ngIf="isIncomeAdd">
+                <label for="addNumber">Введіть суму</label>
+                <input type="number" name="addNumber" id="addNumber" #addNumber="ngModel" 
+                required ngModel>
+                <input type="button" [disabled]="!addNumber.valid" value="add" (click)="addIncomeFinish(addNumber.value)">
+            </div>
+        </div>
+
+        <h3>SAVINGS</h3>
+        <div class="center__box">    
+            <div class="center__element" *ngFor="let save of userLogged.saves; let i = index;">
+                <p class="center__heading">{{save.name}}</p>
+                <div class="center__circle" [attr.data-index] ="i"
+                    [class.activeIcon]="(isIncomeActive && isDistributeActive) || (!isIncomeActive && save.active)"
+                    (click) ="activeSave($event, save.active)">
+                    <i class="{{save.icon}}"></i>
+                </div>
+                <p class="center__heading">${{save.sum}}</p>
+            </div>
+            <div class="center__element">
+                <p class="center__heading"></p>
+                <div class="center__circle grey" (click) ="addSaveStart()">
+                    <i class="fa fa-plus"></i>
+                </div>
+                <div class="center__addSave" [hidden]="isAddSave">
+                    <input type="text" name="addSave" id="addSave" 
+                    placeholder="Введіть ім'я категорії" #addSave = "ngModel" required ngModel>
+                    <input type="button" [disabled]="!addSave.valid" value="add" 
+                    (click)="addSaveFinish(addSave.value)" >
+                </div>
+            </div>
+        </div>
+
+        <h3>SPENDS</h3>
+        <div class="center__box">
+            <h4 [hidden]="!isClue">Спершу активуйте якусь кноопку збережень
+                <span (click)="isClue = false">&times;</span>
+            </h4>
+            <div class="center__element" *ngFor="let spend of userLogged.spends">
+                <p class="center__heading">{{spend.name}}</p>
+                <div class="center__circle" [class.activeIcon]="isSpendActive" 
+                    (click)="isSpendActive ? isCountSave = true : isClue = true">
+                    <i class="{{spend.icon}}"></i>
+                </div>
+                <p class="center__heading">${{spend.sum}}</p>
+            </div>
+            <div class="center__element" >
+                <p class="center__heading"></p>
+                <div class="center__circle grey" (click) ="addSpendStart()">
+                    <i class="fa fa-plus"></i>
+                </div>
+                <div class="center__addSave" [hidden]="isAddSpend">
+                    <input type="text" name="addSpend" id="" placeholder="Введіть ім'я категорії" 
+                    #addSpend= "ngModel" required ngModel>
+                    <input type="button" value="add" (click)="addSpendFinish(addSpend.value)" 
+                    [disabled] = "!addSpend.valid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
