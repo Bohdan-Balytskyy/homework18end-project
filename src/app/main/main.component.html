@@ -11,11 +11,11 @@
             </div>
             <div class="major__box balance">
                 <i class="fa fa-balance-scale"></i>
-                <span>BALANCE: ${{userLogged.balance}}</span>
+                <span>BALANCE: ${{userLogged.balance.toFixed(2).toLocaleString()}}</span>
             </div>
             <div class="major__box expenses">
                 <i class="fa fa-shopping-cart"></i>
-                <span>EXPENSES: ${{userLogged.expenses}}</span>
+                <span>EXPENSES: ${{userLogged.expenses.toFixed(2).toLocaleString()}}</span>
             </div>
             <div class="major__box date">
                 <i class="fa fa-calendar"></i>
@@ -28,14 +28,45 @@
     </header>
 
     <div class="center" >
-        <div class="center__countSave" *ngIf="isCountIncome">
-            <input type="button" name="okSave" value="OK">
-            <input type="button" name="cancelSave" value="CANCEL" (click)="isCountIncome = false">
+        <div class="center__countSave" (click)="enterNumber($event)" *ngIf="isCountIncome || isCountSave">
+            <span (click)="isCountIncome = false; isCountSave = false" class="close">&times;</span>
+            <div class="center__row">
+                    <input type="text" name="countInput" class="countInput" #countInputT = ngModel 
+                    [(ngModel)]="countInput" (keyup)="checkInput($event)" 
+                    (keydown)= "lengthInput = countInput.length; oldCountInput = countInput" 
+                    required pattern="\d+(\.\d+)?">
+            </div>
+            <div class="center__row">
+                <button class="center__button number">1</button>
+                <button class="center__button number">2</button>
+                <button class="center__button number">3</button>
+                <button class="center__button number">4</button>
+                <button class="center__button number">5</button>
+                <button class="center__button number">6</button>
+                <button class="center__button number">7</button>
+                <button class="center__button number">8</button>
+                <button class="center__button number">9</button>
+                <button class="center__button number">0</button>
+            </div>
+            <div class="center__row"> 
+                <button class="center__button operand">.</button>
+                <button class="center__button operand">+</button>
+                <button class="center__button operand">-</button>
+                <button class="center__button operand">*</button>
+                <button class="center__button operand">/</button>
+                <button class="center__button action" 
+                (click)="count(countInputT.value)" [disabled] = "!equalOrEnter">=</button>
+                <button class="center__button action" (click)="countInput = ''">C</button>
+                <button name="okSave" class="center__button action" [disabled] = "equalOrEnter" 
+                (click) = "changeSum(countInputT.value, countInputT.valid)">
+                    <i class="fa fa-check"></i>
+                </button>
+            </div>
+            <div class="center__warnCount" *ngIf = "isWarn">Недопустиме значення</div>
+            <div class="center__warnCount" *ngIf = "isWarn2">Помилка в розрахунках. Перевір символи</div>
         </div>
-        <div class="center__countSave" *ngIf="isCountSave">
-            <input type="button" name="okSpend" value="OK">
-            <input type="button" name="cancelSpend" value="CANCEL" (click)="isCountSave = false">
-        </div>
+      
+        
         <div class="center__box" >
             <div class="center__element">
                 <p class="center__heading">INCOME</p>
@@ -43,13 +74,13 @@
                 [class.activeIcon]="isIncomeActive">
                     <i class="fa fa-dollar"></i>
                 </div>
-                <p class="center__heading">${{userLogged.income}}</p>
+                <p class="center__heading">${{userLogged.income.toFixed(2).toLocaleString()}}</p>
             </div>
             <div class="center__boxChoice" *ngIf="(isIncomeActive && !isDistributeActive && !isIncomeAdd)">
                     <input class="center__choice" type="button" value="Внести дохід" name="add"
-                    (click)="addIncomeStart()">
+                    (click)="isIncomeAdd = true">
                     <input class="center__choice" type="button" value="Розподілити дохід" 
-                    name="distribute" (click)="distribute()">
+                    name="distribute" (click)="isDistributeActive = true">
             </div>
             <div class="center__addIncome" *ngIf="isIncomeAdd">
                 <label for="addNumber">Введіть суму</label>
@@ -65,14 +96,14 @@
                 <p class="center__heading">{{save.name}}</p>
                 <div class="center__circle" [attr.data-index] ="i"
                     [class.activeIcon]="(isIncomeActive && isDistributeActive) || (!isIncomeActive && save.active)"
-                    (click) ="activeSave($event, save.active)">
+                    (click) ="activeSave($event, save.active, i)">
                     <i class="{{save.icon}}"></i>
                 </div>
-                <p class="center__heading">${{save.sum}}</p>
+                <p class="center__heading">${{save.sum.toFixed(2).toLocaleString()}}</p>
             </div>
             <div class="center__element">
                 <p class="center__heading"></p>
-                <div class="center__circle grey" (click) ="addSaveStart()">
+                <div class="center__circle grey" (click) ="isAddSave = false">
                     <i class="fa fa-plus"></i>
                 </div>
                 <div class="center__addSave" [hidden]="isAddSave">
@@ -86,20 +117,21 @@
 
         <h3>SPENDS</h3>
         <div class="center__box">
-            <h4 [hidden]="!isClue">Спершу активуйте якусь кноопку збережень
+            <h4 [hidden]="!isClue">Спершу активуйте якусь кнопку збережень
                 <span (click)="isClue = false">&times;</span>
             </h4>
-            <div class="center__element" *ngFor="let spend of userLogged.spends">
+            <div class="center__element" *ngFor="let spend of userLogged.spends; let i = index;">
                 <p class="center__heading">{{spend.name}}</p>
                 <div class="center__circle" [class.activeIcon]="isSpendActive" 
-                    (click)="isSpendActive ? isCountSave = true : isClue = true">
+                    (click)="isSpendActive ? isCountSave = true : isClue = true"
+                    (click)="spendIndex = i">
                     <i class="{{spend.icon}}"></i>
                 </div>
-                <p class="center__heading">${{spend.sum}}</p>
+                <p class="center__heading">${{spend.sum.toFixed(2).toLocaleString()}}</p>
             </div>
-            <div class="center__element" >
+            <div class="center__element">
                 <p class="center__heading"></p>
-                <div class="center__circle grey" (click) ="addSpendStart()">
+                <div class="center__circle grey" (click) ="isAddSpend = false">
                     <i class="fa fa-plus"></i>
                 </div>
                 <div class="center__addSave" [hidden]="isAddSpend">

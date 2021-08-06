@@ -1,17 +1,17 @@
-<div class="boxLogin">
-    <div>
-        <input type="text" placeholder="Введіть email" [(ngModel)]="email" name="email" 
-        #emailT = "ngModel" required pattern="[-\w\.]+@[a-zA-Z]+\.[a-zA-Z\.]+">
-        <p *ngIf="!(emailT.valid || emailT.untouched)" class="warn">Невірний email</p>
-    </div>
+<form [formGroup]="myForm" novalidate>
+    <div class="boxLogin">
+        <div>
+            <input type="text" name="email" formControlName="userEmail" placeholder="Введіть email">
+            <p *ngIf="!(myForm.controls['userEmail'].valid || myForm.controls['userEmail'].untouched)"
+             class="warn">Невірний email</p>
+        </div>
     
-    <div>
-        <input type="password" placeholder="Введіть password" [(ngModel)]="password" name="password"
-        #passwordT = "ngModel" required pattern="[a-zA-Z]+">
-        <p *ngIf="!(passwordT.valid || passwordT.untouched)" class="warn">Введіть латиницю</p>
+        <div>
+            <input type="password" name="password" formControlName="userPassword" placeholder="Введіть password">
+            <p *ngIf="!(myForm.controls['userPassword'].valid || myForm.controls['userPassword'].untouched)" class="warn">Введіть латиницю</p>
+        </div>
+        <div>
+            <input type="button" value="Увійти" [disabled]="myForm.controls['userPassword'].invalid || myForm.controls['userEmail'].invalid" (click)=loginUser()>
+        </div>
     </div>
-    <div>
-        <input type="button" value="Увійти" [disabled]="passwordT.invalid || emailT.invalid" 
-        (click)=loginUser()>
-    </div>
-</div>
+</form>

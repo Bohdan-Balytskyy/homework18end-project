@@ -63,6 +63,13 @@
       height: 1.5rem;
       margin-bottom: 1rem;
     }
+    &__warnCount {
+      color: red;
+      font-size: 1rem;
+      position: absolute;
+      top: 8.5rem;
+      text-align: center;
+    }
     &__box {
       height: 30%;
       display: flex;
@@ -104,9 +111,46 @@
       background-color: lightgreen;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: center;
       border-radius: 5px;
       z-index: 2;
+    }
+    .close {
+      position: absolute;
+      right: 0.5rem;
+      top: 0rem;
+      font-size: 2rem;
+      color: black;
+    }
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      height: 1.7rem;
+      width: 21rem;
+      align-items: center;
+    }
+    &__button {
+      font-size: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 1px solid lightgreen;
+      text-align: center;
+      padding: 0;
+      border-radius: 5px;
+    }
+    .action {
+      width: 3rem;
+    }
+    &__button:focus {
+      border: 1px solid white;
+    }
+    input[type="text"].countInput {
+      width: 21rem;
+      height: 1.7rem;
+      margin-left: 0;
+      padding-left: 1rem;
     }
     &__circle {
       border-radius: 50%;

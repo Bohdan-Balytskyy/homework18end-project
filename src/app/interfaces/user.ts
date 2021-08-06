@@ -6,6 +6,6 @@ export interface User extends Finances {
     surname: string,
     password: string,
     email: string,
-    balance: string,
-    expenses: string,
+    balance: number,
+    expenses: number,
 }
