@@ -7,12 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { SumFormatPipe } from './sum-format.pipe';
+import { ActiveIconDirective } from './active-icon.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    SumFormatPipe,
+    ActiveIconDirective
   ],
   imports: [
     BrowserModule,

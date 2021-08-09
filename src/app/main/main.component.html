@@ -11,11 +11,11 @@
             </div>
             <div class="major__box balance">
                 <i class="fa fa-balance-scale"></i>
-                <span>BALANCE: ${{userLogged.balance.toFixed(2).toLocaleString()}}</span>
+                <span>BALANCE: ${{userLogged.balance | sumFormat}}</span>
             </div>
             <div class="major__box expenses">
                 <i class="fa fa-shopping-cart"></i>
-                <span>EXPENSES: ${{userLogged.expenses.toFixed(2).toLocaleString()}}</span>
+                <span>EXPENSES: ${{userLogged.expenses | sumFormat}}</span>
             </div>
             <div class="major__box date">
                 <i class="fa fa-calendar"></i>
@@ -71,10 +71,11 @@
             <div class="center__element">
                 <p class="center__heading">INCOME</p>
                 <div class="center__circle" (click)="clickIncome()" 
-                [class.activeIcon]="isIncomeActive">
+                [activeIcon]="isIncomeActive"
+                >
                     <i class="fa fa-dollar"></i>
                 </div>
-                <p class="center__heading">${{userLogged.income.toFixed(2).toLocaleString()}}</p>
+                <p class="center__heading">${{userLogged.income | sumFormat}}</p>
             </div>
             <div class="center__boxChoice" *ngIf="(isIncomeActive && !isDistributeActive && !isIncomeAdd)">
                     <input class="center__choice" type="button" value="Внести дохід" name="add"
@@ -95,11 +96,11 @@
             <div class="center__element" *ngFor="let save of userLogged.saves; let i = index;">
                 <p class="center__heading">{{save.name}}</p>
                 <div class="center__circle" [attr.data-index] ="i"
-                    [class.activeIcon]="(isIncomeActive && isDistributeActive) || (!isIncomeActive && save.active)"
+                    [activeIcon]="(isIncomeActive && isDistributeActive) || (!isIncomeActive && save.active)"
                     (click) ="activeSave($event, save.active, i)">
                     <i class="{{save.icon}}"></i>
                 </div>
-                <p class="center__heading">${{save.sum.toFixed(2).toLocaleString()}}</p>
+                <p class="center__heading">${{save.sum | sumFormat}}</p>
             </div>
             <div class="center__element">
                 <p class="center__heading"></p>
@@ -122,12 +123,12 @@
             </h4>
             <div class="center__element" *ngFor="let spend of userLogged.spends; let i = index;">
                 <p class="center__heading">{{spend.name}}</p>
-                <div class="center__circle" [class.activeIcon]="isSpendActive" 
+                <div class="center__circle" [activeIcon]="isSpendActive" 
                     (click)="isSpendActive ? isCountSave = true : isClue = true"
                     (click)="spendIndex = i">
                     <i class="{{spend.icon}}"></i>
                 </div>
-                <p class="center__heading">${{spend.sum.toFixed(2).toLocaleString()}}</p>
+                <p class="center__heading">${{spend.sum | sumFormat}}</p>
             </div>
             <div class="center__element">
                 <p class="center__heading"></p>
