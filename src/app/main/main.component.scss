@@ -50,6 +50,9 @@
     .logout {
       cursor: pointer;
     }
+    .sidebar:hover {
+      cursor: pointer;
+    }
   }
   .center {
     position: relative;
@@ -122,6 +125,10 @@
       top: 0rem;
       font-size: 2rem;
       color: black;
+      &:hover {
+        cursor: pointer;
+        color: white;
+      }
     }
     &__row {
       display: flex;
@@ -239,4 +246,56 @@
   height: 100vh;
   z-index: 1;
   position: absolute;
+}
+.block,
+.modal-block {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.modal-block {
+  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+}
+.block {
+  left: -350px;
+  width: 350px;
+  height: 70vh;
+  background-color: #448444;
+  text-align: left;
+  transition-duration: 1s;
+  transition-property: left;
+
+  ul {
+    list-style: none;
+    padding: 1rem;
+  }
+  li {
+    height: 2rem;
+    margin: 2rem;
+    font-size: 2rem;
+  }
+  &__button {
+    background-color: #448444;
+    border: 0;
+    font-size: 2rem;
+    margin-left: 1rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .closeSideBar {
+    position: absolute;
+    right: 0.5rem;
+    top: 0rem;
+    font-size: 2rem;
+    &:hover {
+      cursor: pointer;
+      color: white;
+    }
+  }
 }

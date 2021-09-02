@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Save } from '../interfaces/save';
 import { Spend } from '../interfaces/spend';
@@ -45,6 +45,9 @@ export class MainComponent implements OnInit {
   spendIndex: number = null;
   isWarn: boolean = false;
   isWarn2: boolean = false;
+  isSideBar: boolean = false;
+  @ViewChild("sidebar") sidebar;
+  whatShow: boolean[] = [true,false,false]
 
   constructor(private servuser: ServUsersService, private router: Router) {
     this.userLogged = this.servuser.userLogged;
@@ -202,6 +205,19 @@ export class MainComponent implements OnInit {
     } else {
       this.isWarn = true;
       setTimeout(()=>this.isWarn = false, 2000 )
+    }
+  }
+
+  animation($event): void {
+    if (getComputedStyle(this.sidebar.nativeElement).left === "-350px") {
+      this.sidebar.nativeElement.style.left = "0";
+    } else {
+      if ($event.target.className.includes('modal-block') ||
+        $event.target.className.includes('closeSideBar') ||
+        $event.target.className.includes('block__button')) {
+        this.sidebar.nativeElement.style.left = "-350px";
+        setTimeout(() => this.isSideBar = false, 1000);
+      };
     }
   }
 }

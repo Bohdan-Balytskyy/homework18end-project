@@ -5,6 +5,9 @@ import { tap } from 'rxjs/operators';
 
 import { User } from '../app/interfaces/user';
 import { Finances } from '../app/interfaces/financesData';
+import { History } from '../app/interfaces/history';
+import { Statistic } from './interfaces/statistic';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,9 @@ export class ServUsersService {
   
   public token: string = '';
   public userLogged: User | undefined;
-  
+  public history: History[];
+  public statistic: Statistic[];
+
   constructor(private http: HttpClient) {
   }
   setHeaders(token) {
@@ -33,6 +38,18 @@ export class ServUsersService {
       pipe(tap(data => {
         this.token = data.access_token;
         this.userLogged = data.user;
+      }))
+  }
+  getHistory(id: number): Observable<History[]>{
+    return this.http.get<History[]>(`http://localhost:5000/users/history/` + id, this.setHeaders(this.token)).
+      pipe(tap(data => {
+        this.history = data;
+      }))
+  }
+   getStatistic(id: number): Observable<Statistic[]>{
+    return this.http.get<Statistic[]>(`http://localhost:5000/users/statistic/` + id, this.setHeaders(this.token)).
+      pipe(tap(data => {
+        this.statistic = data;
       }))
   }
 }

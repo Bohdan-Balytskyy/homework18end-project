@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { SumFormatPipe } from './sum-format.pipe';
 import { ActiveIconDirective } from './active-icon.directive';
+import { StatisticComponent } from './statistic/statistic.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ActiveIconDirective } from './active-icon.directive';
     LoginComponent,
     MainComponent,
     SumFormatPipe,
-    ActiveIconDirective
+    ActiveIconDirective,
+    StatisticComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
