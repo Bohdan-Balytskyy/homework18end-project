@@ -11,6 +11,7 @@ import { SumFormatPipe } from './sum-format.pipe';
 import { ActiveIconDirective } from './active-icon.directive';
 import { StatisticComponent } from './statistic/statistic.component';
 import { HistoryComponent } from './history/history.component';
+import { MyprofileComponent } from './myprofile/myprofile.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { HistoryComponent } from './history/history.component';
     SumFormatPipe,
     ActiveIconDirective,
     StatisticComponent,
-    HistoryComponent
+    HistoryComponent,
+    MyprofileComponent
   ],
   imports: [
     BrowserModule,

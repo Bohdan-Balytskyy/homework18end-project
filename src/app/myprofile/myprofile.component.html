@@ -1,0 +1,132 @@
+<form [formGroup]="myForm" novalidate >
+    <div class="main">
+        <div class="checking" *ngIf="isChangeCell">
+            <label for="passw">Введіть пароль</label>
+            <input type="password" name="passw" id="passw" (input)="alowEdit(myForm.value.checkPassword)" 
+            formControlName="checkPassword">
+        </div>
+        <div class="left" >
+            <div>
+                <i class="fa fa-arrow-left"></i>
+                <input type="button" value="Back" name="back" 
+                (click)="router.navigate(['/main'])">
+            </div>
+            <div class="box">
+                <label for="name">Name</label>
+                <input class="input" type="text" name="name" id="name" formControlName="name"
+                readonly (focus)="showEdit($event)" >
+                <span><i class="fa fa-edit" (click)="edit($event)"></i></span>
+            </div>
+                <p *ngIf="!(myForm.controls['name'].valid || myForm.controls['name'].untouched)" 
+                class="warn">Введіть латиницю</p>
+            <div class="box">
+                <label for="surname">Surname</label>
+                <input class="input" type="text" name="surname" id="surname" formControlName="surname"
+                readonly (focus)="showEdit($event)" >
+                <span><i class="fa fa-edit" (click)="edit($event)"></i></span>
+            </div>
+            <p *ngIf="!(myForm.controls['surname'].valid || myForm.controls['surname'].untouched)" 
+            class="warn">Введіть латиницю</p>
+            <div class="box">
+                <label for="email">Email</label>
+                <input class="input" type="text" name="email" id="email" formControlName="email"
+                readonly (focus)="showEdit($event)" >
+                <span><i class="fa fa-edit" (click)="edit($event)"></i></span>
+            </div>
+            <p *ngIf="!(myForm.controls['email'].valid || myForm.controls['email'].untouched)" 
+            class="warn">Невірний email</p>
+            <div>
+                <label for="balance">Balance</label>
+                <input type="text" name="balance" id="balance" readonly
+                    [value]="myForm.controls.balance.value | sumFormat">
+            </div>
+            <div>
+                <label for="lastVisit">Last visit</label>
+                <input type="text" name="lastVisit" id="lastVisit" readonly 
+                [value]="myForm.controls.lastVisit.value | date:'dd.MM.yyyy' ">
+            </div>
+            <div>
+                <input type="button" value="Change password" (click)="isChangePassword = true">
+            </div>
+            <div *ngIf="isChangePassword">
+                <label for="oldPassword">Enter old password</label>
+                <input type="password" name="oldPassword" id="oldPassword" formControlName="oldPassword"
+                    (input)="checkPassword(myForm.value.oldPassword)">
+            </div>
+            <div *ngIf="isCorrectOldPassword">
+                <label for="newPassword1">Enter new password</label>
+                <input type="password" name="newPassword1" id="newPassword1" formControlName="password1">
+            </div>
+            <p *ngIf="isCorrectOldPassword && 
+                        !(myForm.controls['password1'].valid || myForm.controls['password1'].untouched)" class="warn">Пароль
+                повинен містити букви нижнього та верхнього регістру, цифри
+                і спец знаки любі окрім @*?</p>
+            <div *ngIf="isCorrectOldPassword">
+                <label for="newPassword2">Enter new password again</label>
+                <input type="password" name="newPassword2" id="newPassword2" formControlName="password2">
+            </div>
+            <p *ngIf="isCorrectOldPassword && 
+                        !(myForm.controls['password2'].valid || myForm.controls['password2'].untouched)" class="warn">Пароль
+                повинен містити букви нижнього та верхнього регістру, цифри
+                і спец знаки любі окрім @*?</p>
+            <p *ngIf="myForm.value['password1'] !== myForm.value['password2']" class="warn">Паролі не співпадають</p>
+        </div>  
+        
+      
+        <div class="right">
+            <div>
+                <h2>Avatar</h2>
+                <img [src]="url" alt="photo">
+                <div>
+                    <input type="button" class="smallFont" value="Загрузити фото" name="photoOut" (click)="inputFile.click()">
+                    <input type="file" id="file" (change)="handleFileInput($event)" hidden #inputFile>
+                </div>
+                <div class="choose">
+                    <input type="button" class="smallFont" value="Вибрати з наявних" name="photoAmong"
+                        (click)="isShowPhoto = !isShowPhoto">
+                    <div class="standartPhoto" (click)="choosePhoto($event)" *ngIf="isShowPhoto">
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/M.png" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/w.png" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/2.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/3.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/4.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/5.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/6.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/7.jpg" alt="examplePhoto">
+                        </div>
+                        <div class="smallPhoto">
+                            <img src="../../assets/images/8.jpg" alt="examplePhoto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div>
+            <input type="button" value="Save" (click)="save()"
+            [disabled]="myForm.controls['email'].invalid || 
+            myForm.controls['name'].invalid || myForm.controls['surname'].invalid ||
+            (isCorrectOldPassword && myForm.controls['password1'].invalid) ||
+            (isCorrectOldPassword && myForm.controls['password2'].invalid) ||
+            (myForm.value['password1'] !== myForm.value['password2'])">
+            <input type="button" value="Cancel" (click)="cancel()">
+        </div>
+        
+    </div>
+</form>

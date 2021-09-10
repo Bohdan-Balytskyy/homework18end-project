@@ -8,10 +8,12 @@
     
         <div>
             <input type="password" name="password" formControlName="userPassword" placeholder="Введіть password">
-            <p *ngIf="!(myForm.controls['userPassword'].valid || myForm.controls['userPassword'].untouched)" class="warn">Введіть латиницю</p>
+            <p *ngIf="!(myForm.controls['userPassword'].valid || 
+            myForm.controls['userPassword'].untouched)" class="warn">Не дотримані вимоги до паролю</p>
         </div>
         <div>
-            <input type="button" value="Увійти" [disabled]="myForm.controls['userPassword'].invalid || myForm.controls['userEmail'].invalid" (click)=loginUser()>
+            <input type="button" value="Увійти" (click)=loginUser()
+            [disabled]="myForm.controls['userPassword'].invalid || myForm.controls['userEmail'].invalid" >
         </div>
     </div>
 </form>

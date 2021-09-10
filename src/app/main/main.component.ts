@@ -47,10 +47,15 @@ export class MainComponent implements OnInit {
   isWarn2: boolean = false;
   isSideBar: boolean = false;
   @ViewChild("sidebar") sidebar;
-  whatShow: boolean[] = [true,false,false]
+  showConfig = {
+    main: true,
+    statistic: false,
+    history: false,
+  }
 
-  constructor(private servuser: ServUsersService, private router: Router) {
+  constructor(private servuser: ServUsersService, public router: Router) {
     this.userLogged = this.servuser.userLogged;
+    this.servuser.stream$.subscribe(data => this.userLogged = data);
   }
   
   ngOnInit(): void {
@@ -210,7 +215,8 @@ export class MainComponent implements OnInit {
 
   animation($event): void {
     if (getComputedStyle(this.sidebar.nativeElement).left === "-350px") {
-      this.sidebar.nativeElement.style.left = "0";
+      this.isSideBar = true;
+      setTimeout(() => this.sidebar.nativeElement.style.left = "0", 0);
     } else {
       if ($event.target.className.includes('modal-block') ||
         $event.target.className.includes('closeSideBar') ||

@@ -1,7 +1,7 @@
 <div class="background" *ngIf="isCountIncome || isCountSave"></div>
 <div class="container">
     <header>
-        <div class="sidebar" (click)="isSideBar = true" (click)="animation($event)">
+        <div class="sidebar" (click)="animation($event)">
             <i class="fa fa-bars"></i>
         </div>
         <div class="major">
@@ -27,7 +27,7 @@
         </div>
     </header>
 
-    <div class="center" [hidden] = "!whatShow[0]">
+    <div class="center" [hidden] = "!showConfig.main">
         <div class="center__countSave" (click)="enterNumber($event)" *ngIf="isCountIncome || isCountSave">
             <span (click)="isCountIncome = false; isCountSave = false" class="close">&times;</span>
             <div class="center__row">
@@ -144,10 +144,10 @@
             </div>
         </div>
     </div>
-    <div class="center" *ngIf = "whatShow[1]">
+    <div class="center" *ngIf = "showConfig.statistic">
         <app-statistic></app-statistic>
     </div>
-    <div class="center" *ngIf = "whatShow[2]">
+    <div class="center" *ngIf = "showConfig.history">
         <app-history></app-history>
     </div>
 </div>
@@ -156,15 +156,15 @@
         <span (click)="animation($event)" class="closeSideBar">&times;</span>
         <ul>
             <li><i class="fa fa-cog"></i>
-                <button class="block__button" (click)="whatShow = [true,false,false]"
-                (click)= "animation($event)">MY PROFILE</button>
+                <button class="block__button" (click)="showConfig = {main: true, statistic: false, history: false}"
+                (click)= "animation($event)" (click) ="router.navigate(['/myprofile'])">MY PROFILE</button>
             </li>
             <li><i class="fa fa-signal"></i>
-                <button class="block__button" (click)="whatShow = [false,true,false]"
+                <button class="block__button" (click)="showConfig = {main: false, statistic: true, history: false}"
                 (click)= "animation($event)">STATISTIC</button>
             </li>
             <li><i class="fa fa-history"></i>
-                <button class="block__button" (click)="whatShow = [false,false,true]"
+                <button class="block__button" (click)="showConfig = {main: false, statistic: false, history: true}"
                 (click)= "animation($event)">HISTORY</button>
             </li>
         </ul>

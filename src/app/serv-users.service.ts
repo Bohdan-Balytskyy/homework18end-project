@@ -7,6 +7,7 @@ import { User } from '../app/interfaces/user';
 import { Finances } from '../app/interfaces/financesData';
 import { History } from '../app/interfaces/history';
 import { Statistic } from './interfaces/statistic';
+import { UserPersonal } from './interfaces/userPersonal';
 
 
 @Injectable({
@@ -18,6 +19,8 @@ export class ServUsersService {
   public userLogged: User | undefined;
   public history: History[];
   public statistic: Statistic[];
+  public stream$ = new Subject<User>();
+
 
   constructor(private http: HttpClient) {
   }
@@ -50,6 +53,19 @@ export class ServUsersService {
     return this.http.get<Statistic[]>(`http://localhost:5000/users/statistic/` + id, this.setHeaders(this.token)).
       pipe(tap(data => {
         this.statistic = data;
+      }))
+   }
+  updateUser(id: number, body: UserPersonal): Observable<User>{
+    let formData = new FormData();
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        formData.append(key, body[key]);
+      }
+    }
+    return this.http.patch<User>(`http://localhost:5000/users/personal/` + id, formData, this.setHeaders(this.token)).
+      pipe(tap(data => {
+        this.userLogged = data;
+        this.stream$.next(this.userLogged);
       }))
   }
 }

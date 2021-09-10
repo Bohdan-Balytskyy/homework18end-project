@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main {
+  margin: 0 auto;
+  width: 90%;
+  background-color: whitesmoke;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  .checking {
+    color: red;
+    position: absolute;
+    left: auto;
+    top: 130px;
+    input {
+      width: 6rem;
+    }
+  }
+  .left,
+  .right {
+    width: 50%;
+  }
+  div {
+    margin: 1rem 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    span {
+      display: none;
+    }
+    label {
+      font-size: 1rem;
+      margin-right: 1rem;
+    }
+    input {
+      height: 2rem;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 0;
+      margin-right: 1rem;
+      &:focus {
+        outline: 0;
+      }
+      &[type="text"] {
+        margin-right: 1rem;
+      }
+      &[type="button"] {
+        background-color: darkgray;
+        border-radius: 5px;
+        &:focus {
+          border: 2px solid darkgray;
+        }
+        &:hover {
+          background-color: gray;
+        }
+      }
+    }
+    .smallFont {
+      font-size: 0.7rem;
+      margin-right: 0;
+    }
+    .photo {
+      display: flex;
+      align-items: center;
+      .buttons {
+        width: 10rem;
+      }
+    }
+    .choose {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .standartPhoto {
+      display: flex;
+      flex-wrap: wrap;
+      width: 9rem;
+      height: 9rem;
+      .smallPhoto {
+        margin: 0;
+        width: auto;
+        img {
+          width: 3rem;
+          height: 3rem;
+          display: block;
+          margin: 0;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    img {
+      width: 6rem;
+      height: auto;
+      display: inline-block;
+    }
+  }
+  .warn {
+    color: red;
+    text-align: center;
+    font-size: 1rem;
+  }
+}

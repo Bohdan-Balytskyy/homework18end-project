@@ -1,11 +1,9 @@
-import { Finances } from "./financesData"; 
+import { Finances } from "./financesData";
+import { UserPersonal } from "./userPersonal";
 
-export interface User extends Finances {
+export interface User extends Finances,UserPersonal {
     id: number,
-    name: string,
-    surname: string,
-    password: string,
-    email: string,
     balance: number,
     expenses: number,
+    lastVisit: number
 }
