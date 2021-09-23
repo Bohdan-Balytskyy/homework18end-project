@@ -5,4 +5,8 @@ describe('SumFormatPipe', () => {
     const pipe = new SumFormatPipe();
     expect(pipe).toBeTruthy();
   });
+  it('create an instance', () => {
+    const pipe = new SumFormatPipe();
+    expect(pipe.transform(123.456)).toBe('123,46');
+  });
 });
