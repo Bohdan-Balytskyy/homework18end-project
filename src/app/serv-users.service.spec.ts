@@ -35,9 +35,20 @@ describe('ServUsersService', () => {
   const testUser = Object.assign(
     { "id": 2, "lastVisit": 1631566800000, "balance": 2000, "expenses": 1000 },
     testUserFinances, testUserPersonal) as User;
-  const testHistory = [Object.assign(
-    { "date": 1631566800000, "balance": 2000, "expenses": 1000 },
-    testUserFinances)] as History[];
+  const testHistory = {
+    history: [Object.assign(
+      { "date": 1631566800000, "balance": 2000, "expenses": 1000 },
+      testUserFinances)],
+    history23task:[{
+      date: 1,
+      year: 2021,
+      month: 8,
+      sum: 1000,
+      act: '',
+      from: '',
+      to: '',
+    }]
+  };
   const testStatistic = [{"date": 1631566800000, "expenses": 1000, "spends": testUserFinances.spends}] as Statistic[]
   
   const expectedData = {access_token:'access_token', user: testUser};

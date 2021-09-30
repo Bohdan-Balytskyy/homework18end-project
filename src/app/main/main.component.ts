@@ -5,15 +5,18 @@ import { Spend } from '../interfaces/spend';
 import { User } from '../interfaces/user';
 import { Finances } from '../interfaces/financesData';
 import { ServUsersService } from '../serv-users.service';
+import { History23task } from '../interfaces/history23task';
 
 class FinancesClass implements Finances {
   income: number;
   saves: Save[];
   spends: Spend[];
-  constructor(  income: number,saves: Save[],spends: Spend[]) {
+  history23task?: History23task;
+  constructor(  income: number,saves: Save[],spends: Spend[], history23task:History23task) {
     this.income = income;
     this.saves = saves;
     this.spends = spends;
+    this.history23task = history23task;
   }
 }
 
@@ -52,6 +55,7 @@ export class MainComponent implements OnInit {
     statistic: false,
     history: false,
   }
+  history23task: History23task;
 
   constructor(private servuser: ServUsersService, public router: Router) {
     this.userLogged = this.servuser.userLogged;
@@ -74,16 +78,29 @@ export class MainComponent implements OnInit {
     }
   }
   changeDataOnServer(): void {
-    let body = new FinancesClass(this.userLogged.income,this.userLogged.saves,this.userLogged.spends)
+    let body = new FinancesClass(this.userLogged.income,this.userLogged.saves,this.userLogged.spends, this.history23task)
     this.servuser.patchUser(this.userLogged.id, body).subscribe(
       () => this.userLogged = this.servuser.userLogged,
       (err) =>console.log(err)
     )
   }
+  setHistory23task(sum: number, act: string, from: string, to: string) {
+    let date = new Date();
+    this.history23task = {
+      date: date.getTime(),
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      sum: sum,
+      act: act,
+      from: from,
+      to: to,
+    };
+  }
   addIncomeFinish(sum:number): void {
     this.isIncomeAdd = false;
     this.isIncomeActive = false;
     this.userLogged.income += sum;
+    this.setHistory23task(sum, 'income', '', 'income');
     this.changeDataOnServer();
   }
   addSaveFinish(title:string): void {
@@ -194,6 +211,7 @@ export class MainComponent implements OnInit {
         this.userLogged.income -= number;
         this.userLogged.saves[this.saveIndex].sum += number;
         this.isCountIncome = false;
+        this.setHistory23task(number, 'save', 'income', this.userLogged.saves[this.saveIndex].name);
       }
       if (this.isCountSave ) {
         for (const save of this.userLogged.saves) {
@@ -201,6 +219,7 @@ export class MainComponent implements OnInit {
             save.sum -= number;
             this.userLogged.spends[this.spendIndex].sum += number;
             this.isCountSave = false;
+            this.setHistory23task(number, 'spend', save.name, this.userLogged.spends[this.spendIndex].name);
           }
         }
         this.changeActiveSave(100);

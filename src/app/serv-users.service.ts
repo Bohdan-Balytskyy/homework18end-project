@@ -8,6 +8,7 @@ import { Finances } from '../app/interfaces/financesData';
 import { History } from '../app/interfaces/history';
 import { Statistic } from './interfaces/statistic';
 import { UserPersonal } from './interfaces/userPersonal';
+import { History23task } from './interfaces/history23task';
 
 
 @Injectable({
@@ -20,6 +21,7 @@ export class ServUsersService {
   public history: History[];
   public statistic: Statistic[];
   public stream$ = new Subject<User>();
+  public history23task: History23task[];
 
 
   constructor(private http: HttpClient) {
@@ -43,13 +45,14 @@ export class ServUsersService {
         this.userLogged = data.user;
       }))
   }
-  getHistory(id: number): Observable<History[]>{
-    return this.http.get<History[]>(`http://localhost:5000/users/history/` + id, this.setHeaders(this.token)).
+  getHistory(id: number): Observable<{history: History[], history23task: History23task[]}>{
+    return this.http.get<{history: History[], history23task: History23task[]}>(`http://localhost:5000/users/history/` + id, this.setHeaders(this.token)).
       pipe(tap(data => {
-        this.history = data;
+        this.history = data.history;
+        this.history23task = data.history23task;
       }))
   }
-   getStatistic(id: number): Observable<Statistic[]>{
+  getStatistic(id: number): Observable<Statistic[]>{
     return this.http.get<Statistic[]>(`http://localhost:5000/users/statistic/` + id, this.setHeaders(this.token)).
       pipe(tap(data => {
         this.statistic = data;

@@ -1,1 +1,42 @@
-<p>Page is in progress...</p>
+<h2>History</h2>
+<div class="container">
+    <div class="container__monthBlock" (click)="changeActiveButton($event)">
+        <input *ngFor="let m of months" class="month" type="button" [value]="m" [id]="m">
+    </div>
+    <div class="container__yearBlock">
+        <input type="button" value="&lt;" class="toleft" (click)="yearToLeft()">
+        <div class="allYears">
+            <div class="allYearsLine" id="years">
+                <input *ngFor="let y of yearsArray " type="button" [value]="y" class="year">
+            </div>
+        </div>
+        <input type="button" value="&gt;" class="toright" (click)="yearToRight()">
+    </div>
+    <div class="container__data">
+        <div class="total">
+            <p>Total income for the month: <span>{{dataIncome}}</span>$</p>
+            <p>Total expenses for the month: <span>{{dataCosts}}</span>$</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Act</th>
+                    <th>Sum, $</th>
+                    <th>From</th>
+                    <th>To</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let h of history23taskFiltr; let i = index;">
+                    <td>{{h.date | date : 'dd/MM/y HH:mm:ss'}}</td>
+                    <td>{{h.act}}</td>
+                    <td>{{h.sum}}</td>
+                    <td>{{h.from}}</td>
+                    <td>{{h.to}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
