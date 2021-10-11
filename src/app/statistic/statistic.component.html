@@ -1,1 +1,55 @@
-<p>Page is in progress...</p>
+<form #form name="form">
+    <div class="container">
+        <div class="canvas" >
+            <canvas id="myChart" ></canvas>
+            <div class="container__chooseMonthAndYear">
+                <label for="">Місяць
+                    <select name="month" id="month" #selectMonth (change)="changeMonth(selectMonth.value)">
+                        <option *ngFor="let m of months; let i = index" [value]="i" [name]="m" [id]="m">{{m}}</option>
+                    </select>
+                </label>
+                <label for="">Рік
+                    <select name="year" id="year" #selectYear (change)="changeYear(selectYear.value)">
+                        <option *ngFor="let y of yearsArray" [value]="y" [id]="y" [name]="y">{{y}}</option>
+                    </select>
+                </label>
+                <div>
+                    <input type="button" value="Графік витрат" [class.activeButton] = "whatShow === 'costs'" 
+                    (click)="whatShow = 'costs'; showData()">
+                </div>
+                <div>
+                    <input type="button" value="Графік збережень" [class.activeButton] = "whatShow === 'saves'"
+                    (click)="whatShow = 'saves'; showData()">
+                </div>
+                <div>
+                    <input type="button" value="Графік прибутку" [class.activeButton] = "whatShow === 'profit'"
+                    (click)="whatShow = 'profit'; showData()">
+                </div>
+                <div>
+                    <input type="button" value="Всі графіки" [class.activeButton] = "whatShow === 'all'"
+                    (click)="whatShow = 'all'; showData()">
+                </div>
+            </div>
+        </div>
+        <div class="withTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Interest,%</th>
+                        <th>Sum,$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let s of dataForTable">
+                        <td>{{s.category}}</td>
+                        <td>{{s.interest}}</td>
+                        <td>{{s.sum}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+</form>

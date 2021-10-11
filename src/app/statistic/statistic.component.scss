@@ -1,0 +1,76 @@
+.container {
+  .canvas {
+    position: relative;
+    width: 600px;
+    height: auto;
+  }
+  &__chooseMonthAndYear {
+    position: absolute;
+    right: -20rem;
+    top: 0;
+    select {
+      height: 1.5rem;
+      font-size: 1rem;
+      background-color: floralwhite;
+      border-radius: 5px;
+      border: 1px solid lightgreen;
+      margin: 0.5rem;
+      &:focus {
+        outline: 0;
+      }
+    }
+    label {
+      display: block;
+      font-size: 1rem;
+    }
+    div {
+      margin: 0.5rem;
+      input {
+        height: 1.5rem;
+        font-size: 1rem;
+        color: lightgreen;
+        border-radius: 5px;
+        border: 1px solid lightgreen;
+        background-color: floralwhite;
+        &:hover {
+          color: black;
+          background-color: lightgreen;
+        }
+        &:focus {
+          outline: 0;
+          border: 1px solid #000;
+          color: black;
+          background-color: lightgreen;
+        }
+      }
+      .activeButton {
+        border: 1px solid #000;
+        color: black;
+        background-color: lightgreen;
+      }
+    }
+  }
+  .withTable {
+    margin: 2rem auto 0;
+    overflow: auto;
+    max-height: 30vh;
+    width: 50%;
+  }
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    width: 10rem;
+    height: 2rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+  tr:nth-of-type(even) {
+    background-color: darken(floralwhite, 5%);
+  }
+  th {
+    background-color: darken(floralwhite, 5%);
+  }
+}
